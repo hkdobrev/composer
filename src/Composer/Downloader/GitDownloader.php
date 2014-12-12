@@ -199,6 +199,8 @@ class GitDownloader extends VcsDownloader
             if (0 !== $this->process->execute('git stash pop', $output, $path)) {
                 throw new \RuntimeException("Failed to apply stashed changes:\n\n".$this->process->getErrorOutput());
             }
+
+            $this->writeVeryVerboseGitOutput($output);
         }
     }
 
@@ -231,6 +233,7 @@ class GitDownloader extends VcsDownloader
         ) {
             $command = sprintf('git checkout -B %s %s && git reset --hard %2$s', ProcessExecutor::escape($branch), ProcessExecutor::escape('composer/'.$reference));
             if (0 === $this->process->execute($command, $output, $path)) {
+                $this->writeVerboseGitOutput($output);
                 return;
             }
         }
@@ -249,6 +252,7 @@ class GitDownloader extends VcsDownloader
             ) {
                 $command = sprintf('git reset --hard %s', ProcessExecutor::escape($reference));
                 if (0 === $this->process->execute($command, $output, $path)) {
+                    $this->writeVerboseGitOutput($output);
                     return;
                 }
             }
@@ -256,6 +260,7 @@ class GitDownloader extends VcsDownloader
 
         $command = sprintf($template, ProcessExecutor::escape($gitRef));
         if (0 === $this->process->execute($command, $output, $path)) {
+            $this->writeVerboseGitOutput($output);
             return;
         }
 
@@ -293,6 +298,8 @@ class GitDownloader extends VcsDownloader
             throw new \RuntimeException('Failed to execute ' . $command . "\n\n" . $this->process->getErrorOutput());
         }
 
+        $this->writeVeryVerboseGitOutput($output);
+
         return $output;
     }
 
@@ -306,6 +313,8 @@ class GitDownloader extends VcsDownloader
         if (0 !== $this->process->execute('git reset --hard', $output, $path)) {
             throw new \RuntimeException("Could not reset changes\n\n:".$this->process->getErrorOutput());
         }
+
+        $this->writeVerboseGitOutput($output);
     }
 
     /**
@@ -318,6 +327,8 @@ class GitDownloader extends VcsDownloader
         if (0 !== $this->process->execute('git stash', $output, $path)) {
             throw new \RuntimeException("Could not stash changes\n\n:".$this->process->getErrorOutput());
         }
+
+        $this->writeVerboseGitOutput($output);
 
         $this->hasStashedChanges = true;
     }
@@ -341,5 +352,19 @@ class GitDownloader extends VcsDownloader
         }
 
         return $path;
+    }
+
+    protected function writeVerboseGitOutput($output)
+    {
+        if ($this->io->isVerbose()) {
+            $this->io->write($output);
+        }
+    }
+
+    protected function writeVeryVerboseGitOutput($output)
+    {
+        if ($this->io->isVeryVerbose()) {
+            $this->io->write($output);
+        }
     }
 }
