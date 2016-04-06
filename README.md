@@ -43,11 +43,14 @@ install to the latest version.
 Community
 ---------
 
-IRC channels are on irc.freenode.org: [#composer](irc://irc.freenode.org/composer)
-for users and [#composer-dev](irc://irc.freenode.org/composer-dev) for development.
+You can chat with the community or developers of Composer on:
 
-For support, Stack Overflow also offers a good collection of
-[Composer related questions](https://stackoverflow.com/questions/tagged/composer-php).
+- [Gitter room](https://gitter.im/composer/composer).
+- [irc.freenode.org#composer](irc://irc.freenode.org/composer) for users
+- [irc.freenode.org#composer-dev](irc://irc.freenode.org/composer-dev) for development
+
+Stack Overflow also offers a good collection of
+[Composer related questions](https://stackoverflow.com/questions/tagged/composer-php) for support.
 
 Please note that this project is released with a
 [Contributor Code of Conduct](http://contributor-covenant.org/version/1/2/0/).
